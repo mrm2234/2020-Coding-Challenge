@@ -38,7 +38,9 @@ scoreboard = [
 
 @app.route('/')
 def show_scoreboard():
+    print("showing scoreboard")
     return render_template('scoreboard.html', scoreboard = scoreboard) 
+
 
 @app.route('/increase_score', methods=['GET', 'POST'])
 def increase_score():
@@ -51,6 +53,15 @@ def increase_score():
         if team["id"] == team_id:
             team["score"] += 1
 
+    
+
+    for i in range(len(scoreboard)):
+        for j in range(len(scoreboard)-i-1):
+            if scoreboard[j]["score"]<scoreboard[j+1]["score"]:
+                scoreboard[j], scoreboard[j+1]=scoreboard[j+1],scoreboard[j]
+    
+    print("return")
+    
     return jsonify(scoreboard=scoreboard)
 
 
